@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>侯昕昕 · AI训练师</title>
 <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -64,27 +64,40 @@ body{
   position:fixed;top:22px;right:24px;z-index:200;
   display:flex;align-items:center;gap:10px;
 }
+.music-float{flex-direction:column!important;align-items:center!important;gap:6px!important;}
 .music-orb{
-  width:40px;height:40px;border-radius:50%;
-  background:rgba(13,13,20,.7);
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(13,13,20,.8);
   border:1.5px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;
+  cursor:pointer;position:relative;overflow:visible;
   transition:all .3s;
-  box-shadow:0 0 20px rgba(201,168,64,.15);
-  backdrop-filter:blur(10px);
+  box-shadow:0 0 20px rgba(201,168,64,.2);
+  backdrop-filter:blur(12px);
 }
-.music-orb:hover{border-color:var(--gold);box-shadow:0 0 25px rgba(201,168,64,.35);}
-.music-orb.playing{
-  animation:orbPulse 2s ease-in-out infinite;
+.music-orb:hover{border-color:var(--gold);box-shadow:0 0 30px rgba(201,168,64,.5);transform:scale(1.08);}
+.music-orb.playing{border-color:var(--gold);box-shadow:0 0 25px rgba(201,168,64,.4);}
+.music-rings{position:absolute;inset:0;border-radius:50%;pointer-events:none;}
+.music-rings span{
+  position:absolute;inset:0;border-radius:50%;
+  border:1.5px solid rgba(201,168,64,.5);
+  opacity:0;
+}
+.music-orb.playing .music-rings span:nth-child(1){animation:ringOut 2s ease-out infinite;}
+.music-orb.playing .music-rings span:nth-child(2){animation:ringOut 2s ease-out .6s infinite;}
+.music-orb.playing .music-rings span:nth-child(3){animation:ringOut 2s ease-out 1.2s infinite;}
+@keyframes ringOut{
+  0%{transform:scale(1);opacity:.6;}
+  100%{transform:scale(2.2);opacity:0;}
 }
 @keyframes orbPulse{
-  0%,100%{box-shadow:0 0 20px rgba(201,168,64,.2);}
-  50%{box-shadow:0 0 35px rgba(201,168,64,.5),0 0 60px rgba(201,168,64,.15);}
+  0%,100%{box-shadow:0 0 20px rgba(201,168,64,.3);}
+  50%{box-shadow:0 0 40px rgba(201,168,64,.6);}
 }
 .music-label{
-  font-size:11px;color:var(--text2);letter-spacing:1px;
+  font-size:10px;color:var(--text2);letter-spacing:1px;
   opacity:0;transition:opacity .3s;pointer-events:none;
+  text-align:center;white-space:nowrap;
 }
 .music-float:hover .music-label{opacity:1;}
 
@@ -479,41 +492,40 @@ body{
   background:var(--border);transition:background .3s;
 }
 .sb-dots span.cur{background:var(--gold);}
-.sbi-click{cursor:pointer;transition:all .2s;}
-.sbi-click:hover{background:rgba(201,168,64,.08);border-radius:4px;padding-left:4px;}
-
-/* POP MODAL */
-#popModal{
-  display:none;position:fixed;inset:0;z-index:10000;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;
-}
-#popModal.open{display:flex;}
-#popBox{
-  background:rgba(20,18,30,.95);
-  border:1.5px solid var(--border);
-  border-radius:12px;padding:28px 32px;
-  max-width:340px;width:90%;text-align:center;
-  position:relative;
-  box-shadow:0 0 60px rgba(201,168,64,.2);
-  animation:popIn .35s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes popIn{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
-#popClose{
-  position:absolute;top:12px;right:16px;
-  background:none;border:none;color:var(--text3);
-  font-size:18px;cursor:pointer;
-}
-#popClose:hover{color:var(--gold);}
-#popContent{font-size:13px;color:var(--text);line-height:1.8;}
-.pop-emoji{font-size:52px;display:block;margin-bottom:12px;}
-.pop-title{font-family:var(--font-s);font-size:15px;color:var(--gold);margin-bottom:10px;letter-spacing:2px;}
 .sb-status{font-size:10px;color:var(--text3);letter-spacing:2px;}
 .sb-right{font-size:10px;color:var(--text3);letter-spacing:1px;}
 
-@media(max-width:680px){
-  .sidebar{width:180px;padding:14px 10px;}
+@media(max-width:768px){
+  .panel{width:100vw;height:100vh;border-radius:0;}
+  .p-body{flex-direction:column;}
+  .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding:8px 12px;gap:6px;border-right:none;border-bottom:1px solid var(--border2);height:auto;flex-shrink:0;overflow:hidden;}
+  .ava-wrap{flex-direction:row;align-items:center;gap:10px;width:100%;}
+  .ava-frame{width:48px;height:48px;flex-shrink:0;}
+  .ava-photo{width:48px;height:48px;}
+  .ava-corner{width:7px;height:7px;}
+  .id-name{font-size:14px;letter-spacing:2px;}
+  .id-title{font-size:9px;}
+  .status-pill,.sb-info{display:none;}
+  .sb-nav{flex-direction:row;margin-top:0;width:100%;gap:4px;}
+  .nav-item{flex:1;padding:7px 4px;font-size:10px;letter-spacing:0;justify-content:center;gap:4px;}
+  .nav-badge{display:none;}
+  .screen{flex:1;min-height:0;}
+  .tab-panel{padding:12px 10px;}
+  .stats-row{gap:5px;}
+  .stat-num{font-size:15px;}
+  .stat-label{font-size:8px;letter-spacing:1px;}
   .about-grid{grid-template-columns:1fr;}
+  .acard{padding:12px;}
+  .gal-grid{grid-template-columns:repeat(3,1fr);gap:5px;}
+  .pc-head{padding:10px 12px;}
+  .pc-num{font-size:18px;width:22px;}
+  .pc-title{font-size:12px;}
+  .pc-tags{display:none;}
+  .p-topbar .ornament span{font-size:10px;letter-spacing:2px;}
+  .p-clock{font-size:10px;}
+  #popBox{padding:18px 16px;max-width:92vw;}
+}
+@media(max-width:400px){
   .gal-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
@@ -529,8 +541,8 @@ body{
 
 <!-- MUSIC BUTTON -->
 <div class="music-float">
-  <span class="music-label" id="mLabel">点击播放</span>
-  <div class="music-orb" id="mOrb" onclick="toggleMusic()" title="点击播放/暂停音乐">♪</div>
+  <span class="music-label" id="mLabel">暂停</span>
+  <div class="music-orb" id="mOrb" onclick="toggleMusic()" title="背景音乐">♪</div>
 </div>
 
 <!-- LIGHTBOX -->
@@ -577,11 +589,11 @@ body{
       </div>
 
       <div class="sb-info">
-        <div class="sbi-row sbi-click" onclick="popInfo('hangzhou')" title="点击看看"><span class="sbi-icon">📍</span><span class="sbi-val">浙江省杭州市</span><span style="font-size:10px;color:var(--gold);margin-left:auto">✦</span></div>
-        <div class="sbi-row sbi-click" onclick="popInfo('law')" title="点击看看"><span class="sbi-icon">🎓</span><span class="sbi-val">本科 · 法学</span><span style="font-size:10px;color:var(--gold);margin-left:auto">✦</span></div>
-        <div class="sbi-row sbi-click" onclick="popInfo('zhipu')" title="点击看看"><span class="sbi-icon">💼</span><span class="sbi-val">北京智谱科技</span><span style="font-size:10px;color:var(--gold);margin-left:auto">✦</span></div>
-        <div class="sbi-row sbi-click" onclick="popInfo('army')" title="点击看看"><span class="sbi-icon">⚔️</span><span class="sbi-val">退役军人</span><span style="font-size:10px;color:var(--gold);margin-left:auto">✦</span></div>
-        <div class="sbi-row sbi-click" onclick="popInfo('phone')" title="点击看二维码"><span class="sbi-icon">📞</span><span class="sbi-val">191-2046-4512</span><span style="font-size:10px;color:var(--gold);margin-left:auto">✦</span></div>
+        <div class="sbi-row" style="cursor:pointer" onclick="popInfo('hangzhou')" title="点击看看"><span class="sbi-icon">📍</span><span class="sbi-val">浙江省杭州市</span><span style="font-size:9px;color:var(--gold);margin-left:auto">✦</span></div>
+        <div class="sbi-row" style="cursor:pointer" onclick="popInfo('law')" title="点击看看"><span class="sbi-icon">🎓</span><span class="sbi-val">本科 · 法学</span><span style="font-size:9px;color:var(--gold);margin-left:auto">✦</span></div>
+        <div class="sbi-row" style="cursor:pointer" onclick="popInfo('zhipu')" title="点击看看"><span class="sbi-icon">💼</span><span class="sbi-val">北京智谱科技</span><span style="font-size:9px;color:var(--gold);margin-left:auto">✦</span></div>
+        <div class="sbi-row" style="cursor:pointer" onclick="popInfo('army')" title="点击看看"><span class="sbi-icon">⚔️</span><span class="sbi-val">退役军人</span><span style="font-size:9px;color:var(--gold);margin-left:auto">✦</span></div>
+        <div class="sbi-row"><span class="sbi-icon">📞</span><span class="sbi-val">191-2046-4512</span></div>
       </div>
 
       <nav class="sb-nav">
@@ -784,24 +796,19 @@ body{
         </div>
 
         <div id="porto-gallery">
-          <div class="gallery-hint">▸ 点击「＋」上传图片 · 单击图片查看大图 · 悬停显示删除</div>
+          
           <div class="gal-grid" id="galGrid"></div>
         </div>
 
         <div id="porto-video" style="display:none">
-          <div style="display:flex;gap:12px;align-items:flex-start">
-            <div id="vidList" style="width:140px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;"></div>
-            <div id="vidScreen" style="flex:1;aspect-ratio:16/9;background:#000;border:1px solid var(--border2);border-radius:2px;overflow:hidden;position:relative;">
-              <div class="vid-ph" id="vidPh">
-                <div class="vid-ph-ico">▶</div>
-                <p>加载中...</p>
-              </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div id="vidList" style="width:145px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;"></div>
+            <div id="vidScreen" style="flex:1;aspect-ratio:16/9;background:#000;border:1px solid var(--border2);border-radius:4px;overflow:hidden;position:relative;">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;letter-spacing:1px" id="vidPh">▶ 加载中...</div>
             </div>
           </div>
         </div>
-      </div>
-
-    </div><!-- /screen -->
+        <!-- /screen -->
   </div><!-- /p-body -->
 
   <!-- Status bar -->
@@ -886,7 +893,6 @@ function togglePc(id){document.getElementById(id).classList.toggle('open');}
 
 /* ═══ PORTFOLIO SUB-TABS ═══ */
 function switchPortfolio(name,btn){
-  if(name==='video')setTimeout(function(){renderVidList(true);},80);
   document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('porto-gallery').style.display=name==='gallery'?'block':'none';
@@ -896,28 +902,25 @@ function switchPortfolio(name,btn){
 /* ═══ GALLERY ═══ */
 let imgs=[];
 function renderGal(){
-  const g=document.getElementById('galGrid');g.innerHTML='';
-  imgs.forEach((item,i)=>{
-    const src=item.src||item; const label=item.label||'';
-    const d=document.createElement('div');d.className='gitem';
+  const g=document.getElementById('galGrid');
+  if(!g)return;
+  g.innerHTML='';
+  imgs.forEach(function(item,i){
+    const src=item.src||item;
+    const label=item.label||'';
+    const d=document.createElement('div');
+    d.className='gitem';
     const img=document.createElement('img');
-    img.src=src; img.alt=label;
-    img.onclick=function(){openLbIdx(i);};
+    img.src=src;
+    img.alt=label;
+    img.onclick=(function(idx){return function(){openLbIdx(idx);};})(i);
     const cap=document.createElement('div');
-    cap.style.cssText='position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:rgba(255,255,255,.8);font-size:10px;padding:12px 7px 5px;letter-spacing:.5px;pointer-events:none';
+    cap.style.cssText='position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));color:rgba(255,255,255,.85);font-size:10px;padding:14px 8px 6px;pointer-events:none';
     cap.textContent=label;
-    const btn=document.createElement('button');
-    btn.className='gitem-del';btn.textContent='✕';
-    btn.onclick=function(e){delImg(e,i);};
-    d.appendChild(img);d.appendChild(cap);d.appendChild(btn);
+    d.appendChild(img);
+    d.appendChild(cap);
     g.appendChild(d);
   });
-  const slots=Math.min(12-imgs.length,imgs.length===0?6:3);
-  for(let i=0;i<slots;i++){
-    const d=document.createElement('div');d.className='gitem gadd';
-    d.innerHTML='<span class="plus">＋</span><span>上传图片</span><input type="file" accept="image/*" onchange="addImg(event)">';
-    g.appendChild(d);
-  }
 }
 function addImg(e){
   const f=e.target.files[0];if(!f)return;
@@ -925,7 +928,8 @@ function addImg(e){
 }
 function delImg(e,i){e.stopPropagation();imgs.splice(i,1);renderGal();}
 function openLbIdx(i){
-  const item=imgs[i];
+  var item=imgs[i];
+  if(!item)return;
   document.getElementById('lbImg').src=item.src||item;
   document.getElementById('lbLabel').textContent=item.label||'';
   document.getElementById('lightbox').classList.add('open');
@@ -940,53 +944,20 @@ document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===d
 renderGal();
 
 /* ═══ VIDEO ═══ */
-let vids=[
-  {title:'第一支视频求三连！', bvid:'BV13RdGB8EA5'},
-  {title:'最新视频上线求关注！', bvid:'BV13RdGB8EJh'},
-  {title:'最新视频已上线快来围观！', bvid:'BV1DRdGBbEqe'},
-  {title:'视频加载中速速查收惊喜！', bvid:'BV1DRdGBbE2A'},
-  {title:'最新视频来袭快来看看吧！', bvid:'BV1QRdGBbENF'}
-];
-function addVid(){} // reserved
-function renderVidList(autoplay){
-  const list=document.getElementById('vidList');if(!list)return;list.innerHTML='';
-  vids.forEach((v,i)=>{
-    const item=document.createElement('div');
-    item.style.cssText='padding:10px 12px;border:1px solid var(--border2);border-radius:2px;cursor:pointer;font-size:12px;color:var(--text2);background:rgba(255,255,255,.02);transition:all .25s;display:flex;align-items:center;gap:8px;';
-    item.innerHTML='<span style="font-size:16px;color:var(--gold)">▶</span><span style="font-size:11px;letter-spacing:1px">视频 0'+(i+1)+'</span>';
-    item.dataset.idx=i;
-    item.onclick=function(){
-      playVid(i);
-      document.querySelectorAll('#vidList > div').forEach(d=>{d.style.borderColor='var(--border2)';d.style.color='var(--text2)';d.style.background='rgba(255,255,255,.02)';});
-      this.style.borderColor='var(--gold)';this.style.color='var(--gold)';this.style.background='rgba(201,168,64,.08)';
-    };
-    item.onmouseenter=function(){if(this.style.borderColor!=='var(--gold)')this.style.background='rgba(201,168,64,.04)';};
-    item.onmouseleave=function(){if(this.style.borderColor!=='var(--gold)')this.style.background='rgba(255,255,255,.02)';};
-    list.appendChild(item);
-  });
-  if(autoplay!==false){
-    // auto play first
-    playVid(0);
-    if(list.firstChild){list.firstChild.style.borderColor='var(--gold)';list.firstChild.style.color='var(--gold)';list.firstChild.style.background='rgba(201,168,64,.08)';}
+function loadVid(){
+  const url=document.getElementById('vidUrl').value.trim();if(!url)return;
+  const sc=document.getElementById('vidScreen');
+  const bv=url.match(/bilibili\.com\/video\/(BV[a-zA-Z0-9]+)/);
+  const av=url.match(/bilibili\.com\/video\/av(\d+)/i);
+  if(bv||av){
+    const q=bv?`bvid=${bv[1]}`:`aid=${av[1]}`;
+    sc.innerHTML=`<iframe src="//player.bilibili.com/player.html?${q}&page=1&high_quality=1&danmaku=0" allowfullscreen scrolling="no" frameborder="0"></iframe>`;
+  } else if(/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)){
+    sc.innerHTML=`<video controls src="${url}" style="width:100%;height:100%;background:#000"></video>`;
+  } else {
+    sc.innerHTML=`<iframe src="${url}" allowfullscreen frameborder="0"></iframe>`;
   }
 }
-function playVid(i){
-  const v=vids[i];
-  const sc=document.getElementById('vidScreen');
-  sc.innerHTML='';
-  const iframe=document.createElement('iframe');
-  iframe.src='https://player.bilibili.com/player.html?bvid='+v.bvid+'&page=1&high_quality=1&danmaku=0&autoplay=1';
-  iframe.setAttribute('allowfullscreen','true');
-  iframe.setAttribute('scrolling','no');
-  iframe.setAttribute('frameborder','0');
-  iframe.setAttribute('allow','autoplay; fullscreen');
-  iframe.style.cssText='width:100%;height:100%;border:none;position:absolute;top:0;left:0;';
-  sc.style.position='relative';
-  sc.appendChild(iframe);
-}
-function delVid(e,i){e.stopPropagation();}
-// Init video list on load
-document.addEventListener('DOMContentLoaded',function(){renderVidList(false);});
 
 /* ═══ MUSIC — pentatonic / guqin-ish ═══ */
 let actx=null,mGain=null,playing=false,loopTimer=null,progTimer=null,loopStart=0;
@@ -1027,15 +998,26 @@ function schedLoop(){
   progTimer=setInterval(()=>{if(!playing)return;},120);
 }
 function toggleMusic(){
-  initA();if(actx.state==='suspended')actx.resume();
-  playing=!playing;
-  const orb=document.getElementById('mOrb');
-  const lbl=document.getElementById('mLabel');
+  initA();
+  if(actx.state==='suspended') actx.resume();
+  playing = !playing;
+  const orb = document.getElementById('mOrb');
+  const lbl = document.getElementById('mLabel');
+  const iconPlay = document.getElementById('mIconPlay');
+  const iconPause = document.getElementById('mIconPause');
   if(playing){
-    schedLoop();orb.classList.add('playing');orb.textContent='♫';lbl.textContent='暂停';
+    schedLoop();
+    orb.classList.add('playing');
+    if(iconPlay) iconPlay.style.display='none';
+    if(iconPause) iconPause.style.display='block';
+    lbl.textContent = '▐▐ 暂停';
   } else {
-    clearTimeout(loopTimer);clearInterval(progTimer);
-    orb.classList.remove('playing');orb.textContent='♪';lbl.textContent='播放';
+    clearTimeout(loopTimer);
+    clearInterval(progTimer);
+    orb.classList.remove('playing');
+    if(iconPlay) iconPlay.style.display='block';
+    if(iconPause) iconPause.style.display='none';
+    lbl.textContent = '▶ 播放';
   }
 }
 const GALLERY_IMGS = [
@@ -1061,194 +1043,267 @@ const GALLERY_IMGS = [
   renderGal();
 })();
 
-// Music starts only when user clicks the orb
-// (auto-start removed to prevent unexpected music)
-
-/* ═══════════════════════════════════
-   INTERACTIVE EFFECTS
-═══════════════════════════════════ */
-(function(){
-
-/* 1. 烟花爆炸 - 鼠标点击 */
-const canvas = document.createElement('canvas');
-canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
-document.body.appendChild(canvas);
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-const particles = [];
-const COLORS = ['#C9A840','#F0D070','#FFD700','#FFA500','#FF6B35','#E8D5A3','#fff8dc','#ffffff'];
-
-class Particle {
-  constructor(x, y, color) {
-    this.x = x; this.y = y;
-    this.color = color;
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 6 + 2;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed - Math.random() * 3;
-    this.alpha = 1;
-    this.decay = Math.random() * 0.02 + 0.015;
-    this.size = Math.random() * 3 + 1;
-    this.gravity = 0.12;
-    this.type = Math.random() > 0.6 ? 'star' : 'circle';
+// Auto-start on first interaction
+document.addEventListener('click',function ao(){
+  initA();if(!playing){playing=true;if(actx.state==='suspended')actx.resume();schedLoop();
+    document.getElementById('mOrb').classList.add('playing');
+    document.getElementById('mOrb').textContent='♫';
+    document.getElementById('mLabel').textContent='暂停';
   }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    this.vy += this.gravity;
-    this.vx *= 0.98;
-    this.alpha -= this.decay;
-    this.size *= 0.97;
-  }
-  draw() {
-    ctx.save();
-    ctx.globalAlpha = Math.max(0, this.alpha);
-    ctx.fillStyle = this.color;
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = this.color;
-    if (this.type === 'star') {
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.x * 0.05);
-      ctx.beginPath();
-      for (let i = 0; i < 5; i++) {
-        const r1 = this.size * 2, r2 = this.size * 0.8;
-        const a1 = (i * 4 * Math.PI) / 5 - Math.PI / 2;
-        const a2 = ((i * 4 + 2) * Math.PI) / 5 - Math.PI / 2;
-        if (i === 0) ctx.moveTo(r1 * Math.cos(a1), r1 * Math.sin(a1));
-        else ctx.lineTo(r1 * Math.cos(a1), r1 * Math.sin(a1));
-        ctx.lineTo(r2 * Math.cos(a2), r2 * Math.sin(a2));
-      }
-      ctx.closePath(); ctx.fill();
-    } else {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.restore();
-  }
-}
-
-class Ring {
-  constructor(x, y) {
-    this.x = x; this.y = y;
-    this.r = 5; this.alpha = 0.8; this.maxR = 60 + Math.random() * 40;
-  }
-  update() { this.r += 3; this.alpha -= 0.025; }
-  draw() {
-    ctx.save();
-    ctx.globalAlpha = Math.max(0, this.alpha);
-    ctx.strokeStyle = '#C9A840';
-    ctx.lineWidth = 1.5;
-    ctx.shadowBlur = 8; ctx.shadowColor = '#C9A840';
-    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.stroke(); ctx.restore();
-  }
-  get dead() { return this.r > this.maxR; }
-}
-
-const rings = [];
-
-function explode(x, y) {
-  const count = 28 + Math.floor(Math.random() * 20);
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle(x, y, COLORS[Math.floor(Math.random() * COLORS.length)]));
-  }
-  rings.push(new Ring(x, y));
-  rings.push(new Ring(x, y));
-}
-
-document.addEventListener('click', e => {
-  if (e.target.closest('#lightbox')) return;
-  explode(e.clientX, e.clientY);
-});
-
-function animLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update(); particles[i].draw();
-    if (particles[i].alpha <= 0) particles.splice(i, 1);
-  }
-  for (let i = rings.length - 1; i >= 0; i--) {
-    rings[i].update(); rings[i].draw();
-    if (rings[i].dead) rings.splice(i, 1);
-  }
-  requestAnimationFrame(animLoop);
-}
-animLoop();
-
-/* 2. 鼠标拖尾光点 */
-const trail = [];
-let mx = -999, my = -999;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-const trailCanvas = document.createElement('canvas');
-trailCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9997;';
-document.body.appendChild(trailCanvas);
-const tctx = trailCanvas.getContext('2d');
-trailCanvas.width = window.innerWidth; trailCanvas.height = window.innerHeight;
-window.addEventListener('resize', () => { trailCanvas.width = window.innerWidth; trailCanvas.height = window.innerHeight; });
-
-class TrailDot {
-  constructor(x, y) {
-    this.x = x; this.y = y;
-    this.alpha = 0.7;
-    this.size = Math.random() * 3 + 1;
-    this.color = COLORS[Math.floor(Math.random() * 4)];
-  }
-  update() { this.alpha -= 0.035; this.size *= 0.94; }
-  draw() {
-    tctx.save();
-    tctx.globalAlpha = Math.max(0, this.alpha);
-    tctx.fillStyle = this.color;
-    tctx.shadowBlur = 4; tctx.shadowColor = this.color;
-    tctx.beginPath(); tctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    tctx.fill(); tctx.restore();
-  }
-}
-
-let frameCount = 0;
-function trailLoop() {
-  frameCount++;
-  if (frameCount % 2 === 0 && mx > 0) trail.push(new TrailDot(mx + (Math.random()-0.5)*6, my + (Math.random()-0.5)*6));
-  tctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
-  for (let i = trail.length - 1; i >= 0; i--) {
-    trail[i].update(); trail[i].draw();
-    if (trail[i].alpha <= 0) trail.splice(i, 1);
-  }
-  requestAnimationFrame(trailLoop);
-}
-trailLoop();
-
-/* 3. 页面切换烟花 */
-const origSwitchTab = window.switchTab;
-window.switchTab = function(name, btn) {
-  const r = btn.getBoundingClientRect();
-  explode(r.left + r.width/2, r.top + r.height/2);
-  origSwitchTab(name, btn);
-};
-
-/* 4. 项目卡片展开特效 */
-const origTogglePc = window.togglePc;
-window.togglePc = function(id) {
-  try {
-    const card = document.getElementById(id);
-    if(card){ const rect = card.getBoundingClientRect(); explode(rect.left + rect.width/2, rect.top + 20); }
-  } catch(e){}
-  origTogglePc(id);
-};
-
-})();
-
+  document.removeEventListener('click',ao);
+},{once:true,capture:false});
 </script>
 <!-- POP MODAL -->
-<div id="popModal" onclick="if(event.target===this)closePopModal()">
-  <div id="popBox">
-    <button id="popClose" onclick="closePopModal()">✕</button>
+<div id="popModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);align-items:center;justify-content:center;" onclick="if(event.target===this)closePopModal()">
+  <div id="popBox" style="background:rgba(20,18,30,.96);border:1.5px solid var(--border);border-radius:12px;padding:28px 28px;max-width:340px;width:90%;text-align:center;position:relative;box-shadow:0 0 60px rgba(201,168,64,.25);animation:popIn .35s cubic-bezier(.34,1.56,.64,1)">
+    <button onclick="closePopModal()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer">✕</button>
     <div id="popContent"></div>
   </div>
 </div>
+<style>
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+#popModal.open{display:flex!important;}
+.sbi-row[onclick]:hover{background:rgba(201,168,64,.08);border-radius:4px;transition:background .2s;}
+</style>
+
+<script>
+/* ══ 烟花特效 ══ */
+(function(){
+  const cvs=document.createElement('canvas');
+  cvs.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+  document.body.appendChild(cvs);
+  const ctx=cvs.getContext('2d');
+  function resize(){cvs.width=innerWidth;cvs.height=innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+
+  const COLS=['#C9A840','#F0D070','#FFD700','#FFA500','#fff8dc','#ffffff','#FF6B35'];
+  const pts=[], rings=[];
+
+  class P{
+    constructor(x,y){
+      this.x=x;this.y=y;
+      const a=Math.random()*Math.PI*2, s=Math.random()*6+2;
+      this.vx=Math.cos(a)*s; this.vy=Math.sin(a)*s-Math.random()*2;
+      this.alpha=1; this.decay=Math.random()*.02+.015;
+      this.r=Math.random()*2.5+.8;
+      this.col=COLS[Math.floor(Math.random()*COLS.length)];
+      this.star=Math.random()>.6;
+    }
+    tick(){this.x+=this.vx;this.y+=this.vy;this.vy+=.1;this.vx*=.98;this.alpha-=this.decay;this.r*=.97;}
+    draw(){
+      ctx.save();ctx.globalAlpha=Math.max(0,this.alpha);
+      ctx.fillStyle=this.col;ctx.shadowBlur=6;ctx.shadowColor=this.col;
+      if(this.star){
+        ctx.translate(this.x,this.y);
+        ctx.beginPath();
+        for(let i=0;i<5;i++){
+          const a1=(i*4*Math.PI/5)-Math.PI/2, a2=((i*4+2)*Math.PI/5)-Math.PI/2;
+          i===0?ctx.moveTo(this.r*2*Math.cos(a1),this.r*2*Math.sin(a1)):ctx.lineTo(this.r*2*Math.cos(a1),this.r*2*Math.sin(a1));
+          ctx.lineTo(this.r*.8*Math.cos(a2),this.r*.8*Math.sin(a2));
+        }
+        ctx.closePath();ctx.fill();
+      } else {
+        ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+  class R{
+    constructor(x,y){this.x=x;this.y=y;this.r=4;this.alpha=.8;this.max=50+Math.random()*40;}
+    tick(){this.r+=2.5;this.alpha-=.022;}
+    draw(){
+      ctx.save();ctx.globalAlpha=Math.max(0,this.alpha);
+      ctx.strokeStyle='#C9A840';ctx.lineWidth=1.5;ctx.shadowBlur=8;ctx.shadowColor='#C9A840';
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.stroke();ctx.restore();
+    }
+    get dead(){return this.r>this.max;}
+  }
+
+  function boom(x,y){
+    for(let i=0;i<30;i++) pts.push(new P(x,y));
+    rings.push(new R(x,y));
+  }
+
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#lightbox')||e.target.closest('#popModal')) return;
+    boom(e.clientX,e.clientY);
+  });
+
+  // 鼠标拖尾
+  const tcvs=document.createElement('canvas');
+  tcvs.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;';
+  document.body.appendChild(tcvs);
+  const tctx=tcvs.getContext('2d');
+  tcvs.width=innerWidth;tcvs.height=innerHeight;
+  window.addEventListener('resize',()=>{tcvs.width=innerWidth;tcvs.height=innerHeight;});
+  const trail=[];let mx=-999,my=-999,fc=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  class T{
+    constructor(x,y){this.x=x;this.y=y;this.a=.6;this.r=Math.random()*2+.5;this.col=COLS[Math.floor(Math.random()*4)];}
+    tick(){this.a-=.04;this.r*=.92;}
+    draw(){tctx.save();tctx.globalAlpha=Math.max(0,this.a);tctx.fillStyle=this.col;tctx.shadowBlur=4;tctx.shadowColor=this.col;tctx.beginPath();tctx.arc(this.x,this.y,this.r,0,Math.PI*2);tctx.fill();tctx.restore();}
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    for(let i=pts.length-1;i>=0;i--){pts[i].tick();pts[i].draw();if(pts[i].alpha<=0)pts.splice(i,1);}
+    for(let i=rings.length-1;i>=0;i--){rings[i].tick();rings[i].draw();if(rings[i].dead)rings.splice(i,1);}
+    fc++;
+    if(fc%2===0&&mx>0) trail.push(new T(mx+(Math.random()-.5)*5,my+(Math.random()-.5)*5));
+    tctx.clearRect(0,0,tcvs.width,tcvs.height);
+    for(let i=trail.length-1;i>=0;i--){trail[i].tick();trail[i].draw();if(trail[i].a<=0)trail.splice(i,1);}
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // 导航切换烟花
+  const orig=window.switchTab;
+  window.switchTab=function(n,b){
+    const r=b.getBoundingClientRect();boom(r.left+r.width/2,r.top+r.height/2);
+    orig(n,b);
+  };
+  const origPc=window.togglePc;
+  window.togglePc=function(id){
+    try{const r=document.getElementById(id).getBoundingClientRect();boom(r.left+r.width/2,r.top+20);}catch(e){}
+    origPc(id);
+  };
+})();
+
+/* ══ 弹窗交互 ══ */
+const popData = {
+  hangzhou: {
+    emoji: '🌊', title: '浙江 · 杭州',
+    content: `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/West_Lake%2C_Hangzhou_%28Unsplash%29.jpg/640px-West_Lake%2C_Hangzhou_%28Unsplash%29.jpg" style="width:100%;border-radius:8px;margin-bottom:10px" onerror="this.style.display='none'">
+    <div style="color:var(--text2);font-size:12px">🏞️ 西湖 · 断桥残雪 · 苏堤春晓<br>人间天堂，不负此名。</div>`
+  },
+  law: {
+    emoji: '⚖️', title: '本科 · 法学',
+    content: `<div style="color:var(--gold);font-size:13px;font-weight:bold;margin-bottom:10px">《中华人民共和国民法典》</div>
+    <div style="color:var(--text2);font-size:11.5px;line-height:1.9;text-align:left;background:rgba(201,168,64,.06);padding:12px;border-radius:6px;border-left:3px solid var(--gold)">
+    第一条：为了保护民事主体的合法权益，调整民事关系，维护社会和经济秩序，适应中国特色社会主义发展要求，弘扬社会主义核心价值观，根据宪法，制定本法。</div>
+    <div style="color:var(--text3);font-size:11px;margin-top:10px">法学思维 · 逻辑严谨 · 文字功底扎实</div>`
+  },
+  zhipu: {
+    emoji: '🤖', title: '北京智谱科技',
+    content: `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
+      <span style="padding:4px 12px;background:rgba(201,168,64,.1);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--gold)">GLM-4V</span>
+      <span style="padding:4px 12px;background:rgba(201,168,64,.1);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--gold)">清影2.0</span>
+      <span style="padding:4px 12px;background:rgba(201,168,64,.1);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--gold)">CogView</span>
+    </div>
+    <div style="color:var(--text2);font-size:12px;line-height:2">🧠 国内顶级AI大模型研发公司<br>深度参与多模态数据全链路工程<br>2年实战 · 10W+ 数据交付</div>`
+  },
+  army: {
+    emoji: '🇨🇳', title: '退役军人',
+    content: `<div style="font-size:72px;margin:8px 0">🇨🇳</div>
+    <div style="color:var(--text2);font-size:12.5px;line-height:2.2">中国人民解放军（退役）<br>🏅 "四有"优秀士兵<br>🎖️ 个人嘉奖一次<br>📝 文书 · 新闻报道员</div>
+    <div style="color:var(--gold);font-size:12px;letter-spacing:2px;margin-top:8px">一身戎装，终身荣耀</div>`
+  },
+  avatar: {
+    emoji: '', title: '',
+    content: `<div style="font-size:48px;margin-bottom:10px">🫡</div>
+    <div style="color:var(--gold);font-size:15px;font-weight:bold;margin-bottom:12px;letter-spacing:2px">你好，我是侯昕昕！</div>
+    <div style="color:var(--text2);font-size:12px;line-height:2.2;text-align:left">
+      🪖 退伍不褪色的AI训练师<br>
+      🤖 白天训练AI · 晚上被AI训练<br>
+      ⚖️ 法学出身的数据工程师<br>
+      🎯 10万条数据的"搬运工"
+    </div>
+    <div style="color:var(--gold);font-size:12px;margin-top:12px;padding:8px;border:1px solid var(--border2);border-radius:4px">
+      "用军人的执行力做AI，用AI的效率做自己"
+    </div>
+    <div style="font-size:28px;margin-top:10px">😄 ✌️ 🔥</div>`
+  }
+};
+
+
+function popInfo(key){
+  const d=popData[key];if(!d)return;
+  document.getElementById('popContent').innerHTML=
+    (d.emoji?'<span style="font-size:52px;display:block;margin-bottom:10px">'+d.emoji+'</span>':'')+
+    (d.title?'<div style="font-family:var(--font-s);font-size:15px;color:var(--gold);margin-bottom:12px;letter-spacing:2px">'+d.title+'</div>':'')+
+    d.content;
+  document.getElementById('popModal').classList.add('open');
+}
+function closePopModal(){document.getElementById('popModal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopModal();});
+</script>
+
+<script>
+/* ══ 视频播放列表 ══ */
+var vids = [
+  {title:'视频 01', bvid:'BV13RdGB8EA5'},
+  {title:'视频 02', bvid:'BV13RdGB8EJh'},
+  {title:'视频 03', bvid:'BV1DRdGBbEqe'},
+  {title:'视频 04', bvid:'BV1DRdGBbE2A'},
+  {title:'视频 05', bvid:'BV1QRdGBbENF'}
+];
+
+function renderVidList(autoplay) {
+  var list = document.getElementById('vidList');
+  if (!list) return;
+  list.innerHTML = '';
+  vids.forEach(function(v, i) {
+    var item = document.createElement('div');
+    item.style.cssText = 'padding:9px 10px;border:1px solid var(--border2);border-radius:3px;cursor:pointer;font-size:11.5px;color:var(--text2);background:rgba(255,255,255,.02);transition:all .2s;display:flex;align-items:center;gap:7px;';
+    item.innerHTML = '<span style="color:var(--gold);font-size:14px">▶</span><span>' + v.title + '</span>';
+    (function(idx){ 
+      item.onclick = function() {
+        playVid(idx);
+        document.querySelectorAll('#vidList > div').forEach(function(d){ d.style.borderColor='var(--border2)'; d.style.background='rgba(255,255,255,.02)'; });
+        this.style.borderColor = 'var(--gold)';
+        this.style.background = 'rgba(201,168,64,.08)';
+      };
+    })(i);
+    item.onmouseenter = function(){ if(this.style.borderColor !== 'rgb(201, 168, 64)') this.style.background='rgba(201,168,64,.04)'; };
+    item.onmouseleave = function(){ if(this.style.borderColor !== 'rgb(201, 168, 64)') this.style.background='rgba(255,255,255,.02)'; };
+    list.appendChild(item);
+  });
+  if (autoplay !== false && vids.length > 0) {
+    playVid(0);
+    if (list.firstChild) { list.firstChild.style.borderColor='var(--gold)'; list.firstChild.style.background='rgba(201,168,64,.08)'; }
+  }
+}
+
+function playVid(i) {
+  var v = vids[i];
+  var sc = document.getElementById('vidScreen');
+  if (!sc) return;
+  sc.innerHTML = '';
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0&autoplay=1';
+  iframe.setAttribute('allowfullscreen', 'true');
+  iframe.setAttribute('scrolling', 'no');
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allow', 'autoplay; fullscreen');
+  iframe.style.cssText = 'width:100%;height:100%;border:none;position:absolute;top:0;left:0;';
+  sc.appendChild(iframe);
+}
+
+/* switchPortfolio 覆盖 - 切到视频时自动渲染列表 */
+var _origSwitchPortfolio = window.switchPortfolio;
+window.switchPortfolio = function(name, btn) {
+  if (_origSwitchPortfolio) _origSwitchPortfolio(name, btn);
+  if (name === 'video') setTimeout(function(){ renderVidList(true); }, 100);
+};
+
+/* switchTab 烟花 */
+if (window.switchTab && !window._tabHooked) {
+  window._tabHooked = true;
+  var _origTab = window.switchTab;
+  window.switchTab = function(name, btn) {
+    try { var r=btn.getBoundingClientRect(); if(window.boom) boom(r.left+r.width/2, r.top+r.height/2); } catch(e){}
+    _origTab(name, btn);
+  };
+}
+if (window.togglePc && !window._pcHooked) {
+  window._pcHooked = true;
+  var _origPc = window.togglePc;
+  window.togglePc = function(id) {
+    try { var r=document.getElementById(id).getBoundingClientRect(); if(window.boom) boom(r.left+r.width/2, r.top+20); } catch(e){}
+    _origPc(id);
+  };
+}
+</script>
 
 </body>
 </html>
