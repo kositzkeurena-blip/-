@@ -514,103 +514,196 @@ body{
 
 
 
-@media(max-width:400px){
-  .gal-grid{grid-template-columns:repeat(2,1fr);}
-}
+
 
 /* ════ MOBILE ════ */
 @media screen and (max-width:768px){
-  html,body{overflow:hidden;position:fixed;width:100%;height:100%;}
-  .panel{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    width:100%;height:100%;
-    border-radius:0;
-    display:flex;flex-direction:column;
+  /* ── iOS/Android 基础修复 ── */
+  html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+    overflow:hidden;
+    height:100%;
+    height:100dvh;
   }
-  .p-topbar{padding:6px 10px 6px;flex-shrink:0;}
-  .ornament span{font-size:10px;letter-spacing:1px;}
-  .orn-line{width:20px;}
-  .p-clock{display:none;}
-  .p-body{
-    flex:1;min-height:0;
+  body{
+    overflow:hidden;
+    height:100%;
+    height:100dvh;
+    position:fixed;
+    width:100%;
+    top:0;left:0;right:0;bottom:0;
+  }
+
+  /* ── 主面板铺满屏幕 ── */
+  .panel{
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    width:100%;
+    height:100%;
+    height:100dvh;
+    border-radius:0;
+    display:flex;
     flex-direction:column;
     overflow:hidden;
   }
-  /* 侧边栏变顶部导航条 */
-  .sidebar{
-    width:100%;height:auto;flex-shrink:0;
-    flex-direction:row;align-items:center;
-    padding:6px 8px;gap:6px;
-    border-right:none;border-bottom:1px solid var(--border2);
-    overflow:hidden;
+
+  /* ── 顶部导航栏 ── */
+  .p-topbar{
+    padding:5px 10px;
+    flex-shrink:0;
   }
-  .ava-wrap{flex-direction:row;align-items:center;gap:8px;flex-shrink:0;}
-  .ava-frame{width:40px;height:40px;}
-  .ava-photo{width:40px;height:40px;}
-  .ava-corner{width:6px;height:6px;}
-  .id-name{font-size:12px;letter-spacing:1px;}
+  .ornament span{font-size:10px;letter-spacing:1px;}
+  .orn-line{width:16px;}
+  .p-clock{display:none;}
+
+  /* ── 主体区域 ── */
+  .p-body{
+    flex:1;
+    min-height:0;
+    flex-direction:column;
+    overflow:hidden;
+    display:flex;
+  }
+
+  /* ── 侧边栏变横向导航条 ── */
+  .sidebar{
+    width:100%;
+    height:auto;
+    flex-shrink:0;
+    flex-direction:row;
+    align-items:center;
+    padding:5px 8px;
+    gap:5px;
+    border-right:none;
+    border-bottom:1px solid var(--border2);
+    overflow:hidden;
+    min-height:52px;
+  }
+  .ava-wrap{
+    flex-direction:row;
+    align-items:center;
+    gap:7px;
+    flex-shrink:0;
+  }
+  .ava-frame{width:38px;height:38px;flex-shrink:0;}
+  .ava-photo{width:38px;height:38px;}
+  .ava-border{inset:-1px;}
+  .ava-corner{width:5px;height:5px;}
+  .id-name{font-size:12px;letter-spacing:1px;white-space:nowrap;}
   .id-title{font-size:9px;display:none;}
   .status-pill{display:none;}
   .sb-info{display:none;}
-  /* 导航按钮 */
+
+  /* ── 导航按钮横排 ── */
   .sb-nav{
-    flex-direction:row;flex:1;
-    gap:4px;margin-top:0;
+    flex-direction:row;
+    flex:1;
+    gap:3px;
+    margin-top:0;
+    min-width:0;
   }
   .nav-item{
-    flex:1;padding:6px 4px;
-    font-size:10px;letter-spacing:0;
-    justify-content:center;gap:3px;
-    border-radius:4px;
+    flex:1;
+    padding:6px 2px;
+    font-size:10px;
+    letter-spacing:0;
+    justify-content:center;
+    gap:3px;
+    min-width:0;
   }
-  .nav-item::before{display:none;}
   .nav-badge{display:none;}
-  .nav-icon{font-size:13px;}
-  /* 内容区 */
-  .screen{flex:1;min-height:0;overflow:hidden;}
+  .nav-icon{font-size:12px;}
+
+  /* ── 内容区 ── */
+  .screen{
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    position:relative;
+  }
   .tab-panel{
-    position:absolute;inset:0;
+    position:absolute;
+    inset:0;
     overflow-y:scroll;
     -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
     padding:10px;
   }
-  /* 统计数字 */
-  .stats-row{gap:4px;margin-bottom:10px;}
-  .stat-box{padding:8px 4px;}
-  .stat-num{font-size:15px;}
+
+  /* ── 关于我 ── */
+  .stats-row{gap:4px;margin-bottom:8px;}
+  .stat-box{padding:7px 4px;}
+  .stat-num{font-size:14px;}
   .stat-label{font-size:8px;letter-spacing:0;}
-  /* 关于我 */
-  .about-grid{grid-template-columns:1fr;gap:8px;}
+  .about-grid{grid-template-columns:1fr;gap:7px;}
   .acard.wide{grid-column:1;}
   .acard{padding:10px 12px;}
-  .icard{padding:10px 12px;}
-  .timeline .tl-title{font-size:12px;}
-  .timeline .tl-desc{font-size:11px;}
-  /* 项目 */
+  .icard{padding:10px;}
+
+  /* ── 项目 ── */
   .pc-head{padding:10px 12px;gap:8px;}
-  .pc-num{font-size:16px;width:20px;}
+  .pc-num{font-size:16px;width:18px;}
   .pc-title{font-size:12px;}
   .pc-sub{font-size:10px;}
   .pc-tags{display:none;}
-  /* 图片集 */
-  .gal-grid{grid-template-columns:repeat(3,1fr);gap:4px;}
-  /* 弹窗 */
+  .pc-body{padding:12px;}
+  .psec p{font-size:11.5px;line-height:1.75;}
+
+  /* ── 图片集 ── */
+  .gal-grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
+  }
+  .gitem{border-radius:3px;}
+
+  /* ── 作品集标签 ── */
+  .portfolio-tabs{margin-bottom:8px;}
+  .ptab{padding:6px 10px;font-size:11px;}
+
+  /* ── 视频区域 ── */
+  #vidScreen{
+    max-height:38vh !important;
+    max-height:38dvh !important;
+  }
+  #vidList{
+    width:120px !important;
+    font-size:10px;
+  }
+
+  /* ── 弹窗 ── */
   #popBox{
     padding:16px 14px;
-    max-width:88vw;
-    max-height:80vh;
+    max-width:90vw;
+    max-height:78vh;
+    max-height:78dvh;
     overflow-y:auto;
     -webkit-overflow-scrolling:touch;
   }
-  /* 状态栏 */
-  .p-statusbar{padding:4px 10px;}
+
+  /* ── 底部状态栏 ── */
+  .p-statusbar{padding:3px 10px;flex-shrink:0;}
   .sb-right{display:none;}
-  /* 作品集子标签 */
-  .portfolio-tabs{margin-bottom:8px;}
-  .ptab{padding:6px 10px;font-size:11px;}
-  /* 视频 */
-  #vidScreen{max-height:35vh !important;}
-  #vidList{max-height:30vh;overflow-y:auto;}
+  #weatherWidget{gap:3px;}
+  #weatherIcon{width:22px;height:22px;}
+  #weatherTemp{font-size:10px;}
+  #weatherDesc{font-size:8px;}
+
+  /* ── 机器人 ── */
+  #rwWrap{right:0;bottom:0;}
+  #rwBot{width:44px;height:60px;}
+  #rwBubble{min-width:124px;max-width:160px;font-size:10px;right:50px;bottom:8px;}
+
+  /* ── 技能标签 ── */
+  .skill-grid{gap:5px;}
+  .skill{padding:4px 9px;font-size:10px;}
+}
+
+@media screen and (max-width:380px){
+  .gal-grid{grid-template-columns:repeat(2,1fr);}
+  .nav-item{font-size:9px;}
+  .id-name{font-size:11px;}
+  #popBox{max-width:94vw;}
 }
 @media screen and (max-width:380px){
   .gal-grid{grid-template-columns:repeat(2,1fr);}
@@ -623,6 +716,7 @@ body{
   position:absolute;inset:0;
   width:100%;height:100%;
   pointer-events:none;opacity:1;
+  display:block;
 }
 
 /* 天气动画 */
@@ -2055,11 +2149,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopModa
   content:'';position:absolute;right:-8px;bottom:14px;
   border:8px solid transparent;border-left-color:var(--border);border-right-width:0;
 }
-@media(max-width:768px){
-  #rwWrap{right:0px;bottom:0px;}
-  #rwBot{width:42px;height:58px;}
-  #rwBubble{min-width:120px;max-width:155px;font-size:10px;right:48px;bottom:10px;}
-}
+
 </style>
 
 
